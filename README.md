@@ -99,7 +99,7 @@ The system evaluates estimations using:
 - Scikit-learn
 
 ## Author
-[Your Name]
+[SSB]
 
 ## License
-[Your License Choice] 
+[##########] 
