@@ -1,0 +1,24 @@
+from preprocessing import preprocess_data
+from cocomo_model import apply_cocomo_model
+from machine_learning import train_and_evaluate_models
+from dynamic_estimation import dynamic_cost_estimation
+
+# Step 1: Preprocess the data
+file_path = 'SEERA cost estimation dataset.xlsx'
+df, important_features, scaler, label_encoders = preprocess_data(file_path)
+
+# Step 2: Apply COCOMO model
+df = apply_cocomo_model(df)
+
+# Step 3: Train and evaluate machine learning models
+train_and_evaluate_models(df, important_features)
+
+# Step 4: Dynamic cost estimation for each project
+team_size_col = 'Team size'  # Replace with actual column name
+duration_col = 'Actual duration'  # Replace with actual column name
+daily_hours_col = 'Daily working hours'  # Replace with actual column name
+df = dynamic_cost_estimation(df, team_size_col, duration_col, daily_hours_col)
+
+# Example: Compare COCOMO Effort, Dynamic Effort, and Actual Effort
+df['Actual Effort'] = df['Actual effort']  # Ensure this column exists
+print(df[['ProjID', 'COCOMO Effort (person-hours)', 'Dynamic Effort', 'Actual Effort']])
