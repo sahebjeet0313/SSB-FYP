@@ -6,6 +6,7 @@ from cocomo_model import apply_cocomo_model
 from machine_learning import train_and_evaluate_models
 from dynamic_estimation import dynamic_cost_estimation
 from hybrid_estimation import hybrid_estimation, analyze_estimation_patterns
+from create_final_summary import create_final_summary
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -173,6 +174,17 @@ def main():
             # Create separate comparison plots
             create_comparison_plots(results_df, df.index)
             logger.info("Individual comparison plots have been created successfully")
+
+            # Create final summary
+            summary_file, metrics_file = create_final_summary(
+                df,
+                ml_predictions,
+                df['COCOMO Effort (person-hours)'].values,
+                df['Dynamic Effort'].values,
+                results_df['Hybrid Estimate'].values
+            )
+            logger.info(f"Final summary created: {summary_file}")
+            logger.info(f"Model metrics saved: {metrics_file}")
 
         else:
             logger.error("Hybrid estimation failed")
